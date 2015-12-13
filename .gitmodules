@@ -1,0 +1,3 @@
+[submodule "src/Doctrine/Bundle/MongoDBBundle"]
+	path = src/Doctrine/Bundle/MongoDBBundle
+	url = git@github.com:doctrine/DoctrineMongoDBBundle.git

@@ -1,0 +1,3 @@
+id4v_carcheck_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: Id4vCarcheckBundle:Default:index }

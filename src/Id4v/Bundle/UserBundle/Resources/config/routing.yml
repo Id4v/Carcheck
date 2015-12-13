@@ -1,0 +1,3 @@
+id4v_user_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: Id4vUserBundle:Default:index }

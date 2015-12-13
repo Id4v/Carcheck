@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block page_content %}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.kilometrage) }}
+    {{ form_row(form.immatriculation) }}
+    {{ form_rest(form) }}
+    <input type="submit" value="Sauver" class="btn btn-success">
+    </form>
+{% endblock %}

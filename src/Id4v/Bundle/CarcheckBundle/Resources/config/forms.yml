@@ -1,0 +1,13 @@
+services:
+    id4v_vehiculte_type:
+        class: Id4v\Bundle\CarcheckBundle\Form\Type\VehiculeType
+        tags:
+            - { name: form.type, alias: vehicule }
+    id4v_entretien_type:
+        class: Id4v\Bundle\CarcheckBundle\Form\Type\EntretienType
+        tags:
+            - { name: form.type, alias: entretien }
+    id4v_ligne_entretien_type:
+        class: Id4v\Bundle\CarcheckBundle\Form\Type\LigneEntretienType
+        tags:
+            - {name: form.type, alias: "ligne_entretien" }

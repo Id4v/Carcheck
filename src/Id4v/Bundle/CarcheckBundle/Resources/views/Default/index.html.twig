@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block page_content %}
+    <h1>Vehicules</h1>
+    <a href="{{ path("id4v_add_vehicule") }}" class="btn btn-primary pull-right">Ajouter un véhicule</a>
+        <table class="table table-striped">
+            <thead>
+                <th>Vehicules</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+        {% for vehicule in vehicules %}
+        <tr>
+            <td><a href="{{ path("id4v_detail_vehicule",{"vehicule":vehicule.id}) }}">{{ vehicule }}</a></td>
+            <td><a href="{{ path("id4v_add_entretien",{"vehicule":vehicule.id }) }}">Ajouter un entretien</a></td>
+        </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}

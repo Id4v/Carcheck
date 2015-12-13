@@ -1,0 +1,4 @@
+services:
+#    id4v_user.example:
+#        class: Id4v\Bundle\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

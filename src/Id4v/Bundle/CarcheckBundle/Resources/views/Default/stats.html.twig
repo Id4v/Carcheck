@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bowers/Chart.js/Chart.js') }}"></script>
+    <script type="text/javascript">
+        var barChartData = {
+            labels: {{ labels|raw }},
+            datasets: [{
+                type: 'bar',
+                label: 'Frais',
+                backgroundColor: "rgba(123,32,0,0.2)",
+                data: {{ dataset[1]|raw }},
+                yAxisID: "y-axis-frais"
+            },{
+                type: 'line',
+                label: 'Km',
+                borderColor: "rgba(220,220,220,1)",
+                data: {{ dataset[0]|raw }},
+                yAxisID: "y-axis-km",
+                fill: false
+            }]
+        };
+        window.onload = function() {
+            var ctx = document.getElementById("graph").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    scales:{
+                        yAxes: [{
+                            id: "y-axis-km",
+                            type: 'linear',
+                            position: "right",
+                            gridLines:{
+                                show:false
+                            }
+                        },
+                            {
+                                id: "y-axis-frais",
+                                type: 'linear',
+                                position: "left",
+                                gridLines:{
+                                    show:false
+                                }
+                            }
+                        ],
+                    }
+                }
+            });
+        };
+    </script>
+{% endblock %}
+
+{% block page_content %}
+    <h1>Stats pour le vehicule {{ vehicule }}</h1>
+    <div class="col-md-4" style="margin-left: 20px;padding: 0px">
+        <canvas id="graph" height="300">
+
+        </canvas>
+    </div>
+{% endblock %}
+
