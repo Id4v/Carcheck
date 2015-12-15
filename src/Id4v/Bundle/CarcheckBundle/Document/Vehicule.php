@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
 
 /**
  * Vehicule
- * @Mongo\Document()
+ * @Mongo\Document(repositoryClass="Id4v\Bundle\CarcheckBundle\Repositories\VehiculeRepository")
  *
  */
 class Vehicule

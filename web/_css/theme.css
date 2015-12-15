@@ -1,0 +1,25 @@
+.navbar{
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.nav-sidebar{
+    margin-left: -20px;
+}
+
+.sidebar{
+    padding-right: 0px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top:60px;
+}
+
+.top-menu{
+    margin-bottom: 0px;
+}
+
+.spaced-from-top{
+    margin-top: 20px;
+}

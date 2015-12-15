@@ -9,7 +9,7 @@
 namespace Id4v\Bundle\UserBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
-use FOS\UserBundle\Document\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Class User

@@ -12,14 +12,16 @@ namespace Id4v\Bundle\CarcheckBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type as CoreTypes;
+
 
 class LigneEntretienType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("designation")
+        $builder->add("designation", CoreTypes\TextType::class)
             ->add("qte")
-            ->add("prix");
+            ->add("prix",CoreTypes\NumberType::class);
     }
 
 

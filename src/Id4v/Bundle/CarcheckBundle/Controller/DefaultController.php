@@ -4,6 +4,7 @@ namespace Id4v\Bundle\CarcheckBundle\Controller;
 
 use Id4v\Bundle\CarcheckBundle\Document\Vehicule;
 use Id4v\Bundle\CarcheckBundle\Document\Entretien;
+use Id4v\Bundle\CarcheckBundle\Form\Type\EntretienType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,22 +60,9 @@ class DefaultController extends Controller
         $vehicule=$this->getVehiculeForId($request->get("vehicule"));
         $entretiens=$this->getDoctrine()->getRepository("Id4vCarcheckBundle:Vehicule")->getAllEntretiensForVehicule($vehicule);
 
-        $labels=array();
-        $dataset=array();
-        $entretiens=$this->generateKilometrageStats($entretiens,$labels,$dataset);
-
-        $labels=json_encode($labels);
-        $datasets=array();
-        foreach($dataset as $datas){
-            $datasets[]=json_encode($datas);
-        }
-
-
         return $this->render("@Id4vCarcheck/Default/stats.html.twig",
             array(
-                "vehicule"=>$vehicule,
-                "labels"=>$labels,
-                "dataset"=>$datasets
+                "vehicule"=>$vehicule
             )
         );
     }
@@ -91,7 +79,7 @@ class DefaultController extends Controller
         
         $ent=new Entretien();
         $ent->setVehicule($vehicule);
-        $form=$this->createForm("entretien",$ent);
+        $form=$this->createForm(EntretienType::class,$ent);
         if($request->isMethod("POST")) {
             $form = $form->handleRequest($request);
             if($form->isValid()) {
