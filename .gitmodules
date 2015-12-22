@@ -1,0 +1,3 @@
+[submodule "src/Sonata/DoctrineMongoDBAdminBundle"]
+	path = src/Sonata/DoctrineMongoDBAdminBundle
+	url = git@github.com:Id4v/SonataDoctrineMongoDBAdminBundle.git

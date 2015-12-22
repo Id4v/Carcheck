@@ -18,6 +18,7 @@
         {{ form_row(form.kilometrage) }}
         {{ form_row(form.type) }}
     <div class="form-group">
+        {{ form_label(form.lignesFacture) }}
     <table class="table table-striped lignesEntretien" data-prototype="{{ form_widget(form.lignesFacture.vars.prototype)|e }}">
         <tbody>
         {% for ligne in form.lignesFacture %}

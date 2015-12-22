@@ -8,6 +8,7 @@ use Id4v\Bundle\CarcheckBundle\Form\Type\EntretienType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Id4v\Bundle\CarcheckBundle\Form\Type\VehiculeType;
 
 class DefaultController extends Controller
 {
@@ -38,7 +39,7 @@ class DefaultController extends Controller
     public function addVehiculeAction(Request $request){
         $vehicule=new Vehicule();
         $dm=$this->getDoctrine()->getManager();
-        $form=$this->createForm("vehicule",$vehicule);
+        $form=$this->createForm(VehiculeType::class,$vehicule);
 
         if($request->isMethod("POST"))
         {

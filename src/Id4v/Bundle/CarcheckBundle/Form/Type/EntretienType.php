@@ -27,7 +27,7 @@ class EntretienType extends AbstractType{
     {
         $builder->add("date",DateType::class)
             ->add("kilometrage")
-            ->add("type",DocumentType::class,array(
+           ->add("type",DocumentType::class,array(
                 "class"=>TypeEntretien::class
             ))
             ->add("lignesFacture",CollectionType::class,array(
