@@ -25,7 +25,13 @@ class EntretienType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("date",DateType::class)
+        $builder->add(
+            "date",
+            DateType::class,
+            array(
+                "widget"=>"single_text"
+            )
+            )
             ->add("kilometrage")
            ->add("type",DocumentType::class,array(
                 "class"=>TypeEntretien::class

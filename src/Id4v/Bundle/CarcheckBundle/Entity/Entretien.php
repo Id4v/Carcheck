@@ -2,26 +2,28 @@
 
 namespace Id4v\Bundle\CarcheckBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Entretien
  *
- * @Mongo\Document()
- * @Mongo\HasLifecycleCallbacks()
+ * @ORM\Entity()
+ * @ORM\Table(name="Entretien")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Entretien
 {
     /**
      * @var integer
-     * @Mongo\Id()
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var \DateTime
      *
-     * @Mongo\Date()
+     * @ORM\Date
      */
     private $date;
 

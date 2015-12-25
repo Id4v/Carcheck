@@ -79,12 +79,13 @@ class DefaultController extends Controller
         $em=$this->getDoctrine()->getManagerForClass("Id4vCarcheckBundle:Entretien");
         
         $ent=new Entretien();
-        $ent->setVehicule($vehicule);
         $form=$this->createForm(EntretienType::class,$ent);
         if($request->isMethod("POST")) {
             $form = $form->handleRequest($request);
             if($form->isValid()) {
+                $vehicule->addEntretien($ent);
                 $em->persist($ent);
+                $em->persist($vehicule);
                 $em->flush();
                 $this->addFlash("success", "Enregistré");
             }
@@ -139,7 +140,7 @@ class DefaultController extends Controller
 
     /**
      * @param $id
-     * @return \Id4v\Bundle\CarcheckBundle\Entity\Vehicule
+     * @return \Id4v\Bundle\CarcheckBundle\Document\Vehicule
      */
     private function getVehiculeForId($id){
         $repoV=$this->getDoctrine()

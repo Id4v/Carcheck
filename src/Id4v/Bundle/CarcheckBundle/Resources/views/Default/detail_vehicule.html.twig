@@ -35,7 +35,7 @@
         {% set total = total+ entretien.total %}
         <tr>
             <td>
-                <a href="{{ path("id4v_edit_entretien",{"vehicule":vehicule.id,"entretien":entretien.id}) }}">{{ entretien.type.name }}</a>
+                <a href="{{ path("id4v_edit_entretien",{"vehicule":vehicule.id,"entretien":entretien.type}) }}">{{ entretien.type.name }}</a>
             </td>
             <td>
                 {{ entretien.date|date("d/m/Y") }}

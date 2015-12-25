@@ -3,9 +3,9 @@ services:
         class: Id4v\Bundle\CarcheckBundle\Admin\VehiculeAdmin
         arguments: [~,Id4v\Bundle\CarcheckBundle\Document\Vehicule, ~]
         tags:
-            - { name: sonata.admin, manager_type: doctrine_mongodb, label: Vehicules}
+            - { name: sonata.admin, manager_type: orm, label: Vehicules}
     id4v_admin_types_entretien:
         class: Id4v\Bundle\CarcheckBundle\Admin\TypeEntretienAdmin
         arguments: [~,Id4v\Bundle\CarcheckBundle\Document\TypeEntretien, ~]
         tags:
-            - { name: sonata.admin, manager_type: doctrine_mongodb, label: "Type d'entretien"}
+            - { name: sonata.admin, manager_type: orm, label: "Type d'entretien"}

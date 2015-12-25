@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block page_content %}
-    <h1>Ajouter une entretien sur le Vehicule </h1>
+    <h1>Ajouter un entretien sur le Vehicule </h1>
     <h4><a href="{{ path("id4v_detail_vehicule",{"vehicule":vehicule.id}) }}">{{ vehicule }}</a></h4>
     {{ form_start(form) }}
         {{ form_row(form.date) }}
@@ -21,6 +21,7 @@
         {{ form_label(form.lignesFacture) }}
     <table class="table table-striped lignesEntretien" data-prototype="{{ form_widget(form.lignesFacture.vars.prototype)|e }}">
         <tbody>
+        {{ form_widget(form.lignesFacture) }}
         {% for ligne in form.lignesFacture %}
             <tr class="ligneFacture">
                 <td>
@@ -48,7 +49,7 @@
         var $collectionHolder;
 
         // setup an "add a tag" link
-        var $addTagLink = $('<td colspan="4"><a href="#" class="add_tag_link">Ajouter une ligne</a></td>');
+        var $addTagLink = $('<td colspan="4"><a href="#" class="add_tag_link"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></td>');
         var $newLinkLi = $("<tr></tr>").append($addTagLink);
 
         jQuery(document).ready(function() {
@@ -98,7 +99,7 @@
         }
 
         function addTagFormDeleteLink($tagFormLi) {
-            var $removeFormA = $('<td><a href="#">delete this tag</a></td>');
+            var $removeFormA = $('<td style="vertical-align: middle;"><a href="#"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a></td>');
             $tagFormLi.append($removeFormA);
 
             $removeFormA.on('click', function(e) {
