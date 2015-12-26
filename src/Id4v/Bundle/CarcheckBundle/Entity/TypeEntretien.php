@@ -1,37 +1,40 @@
 <?php
 
-namespace Id4v\Bundle\CarcheckBundle\Document;
+namespace Id4v\Bundle\CarcheckBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * TypeEntretien
- * @Mongo\Document()
+ * @ORM\Entity()
+ * @ORM\Table()
  */
 class TypeEntretien
 {
     /**
      * @var integer
-     * @Mongo\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @Mongo\String()
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var
-     * @Mongo\EmbedMany(nullable=true, targetDocument="Periode", strategy="setArray")
+     * @ORM\OneToMany(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\Periode", mappedBy="typeEntretien", cascade={"persist"})
      */
     private $periodes;
 
     /**
      * @var
-     * @Mongo\EmbedMany(nullable=true, targetDocument="Entretien")
+     * @ORM\OneToMany(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\Entretien", mappedBy="type")
      */
     private $entretiens;
 
@@ -80,9 +83,9 @@ class TypeEntretien
     /**
      * Add entretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      */
-    public function addEntretien(\Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien)
+    public function addEntretien(\Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien)
     {
         $this->entretiens[] = $entretien;
     }
@@ -90,9 +93,9 @@ class TypeEntretien
     /**
      * Remove entretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      */
-    public function removeEntretien(\Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien)
+    public function removeEntretien(\Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien)
     {
         $this->entretiens->removeElement($entretien);
     }
@@ -110,9 +113,9 @@ class TypeEntretien
     /**
      * Add periode
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Periode $periode
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Periode $periode
      */
-    public function addPeriode(\Id4v\Bundle\CarcheckBundle\Document\Periode $periode)
+    public function addPeriode(\Id4v\Bundle\CarcheckBundle\Entity\Periode $periode)
     {
         $this->periodes[] = $periode;
     }
@@ -120,9 +123,9 @@ class TypeEntretien
     /**
      * Remove periode
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Periode $periode
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Periode $periode
      */
-    public function removePeriode(\Id4v\Bundle\CarcheckBundle\Document\Periode $periode)
+    public function removePeriode(\Id4v\Bundle\CarcheckBundle\Entity\Periode $periode)
     {
         $this->periodes->removeElement($periode);
     }

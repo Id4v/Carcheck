@@ -2,63 +2,44 @@
 
 {% block page_content %}
     <div class="row">
-    <h1 class="col-md-10">Entretiens pour le véhicule {{ vehicule }}</h1>
+        <h1 class="col-md-10">Entretiens pour le véhicule {{ vehicule }}</h1>
         <span class="col-md-2 spaced-from-top">
             <a href="{{ path("id4v_add_entretien",{"vehicule":vehicule.id}) }}" class="btn btn-success">Ajouter un entretien</a>
             <a href="{{ path("id4v_stats_vehicule",{"vehicule":vehicule.id}) }}" class="btn btn-primary">Stats</a>
         </span>
     </div>
     {% if vehicule.entretiens and vehicule.entretiens.count > 0 %}
-    <table class="table table-striped">
-        <thead>
-        <td>Entretien</td>
-        <td>Date</td>
-        <td>Total</td>
-        </thead>
-        <tbody>
-        {% set date = vehicule.entretiens.first.date %}
-        {% set total = 0 %}
-    {% for entretien in vehicule.entretiens %}
-        {% set display_total = (date != entretien.date or loop.last)  %}
-        {% if display_total %}
+        <table class="table table-striped">
+            <thead>
+            <td>Entretien</td>
+            <td>Date</td>
+            <td>Total</td>
+            </thead>
+            <tbody>
+            {% set total = 0 %}
+            {% for entretien in vehicule.entretiens %}
+                <tr>
+                    <td>
+                        <a href="{{ path("id4v_edit_entretien",{"vehicule":vehicule.id,"entretien":entretien.id}) }}">{{ entretien.type.name }}</a>
+                    </td>
+                    <td>
+                        {{ entretien.date|date("d/m/Y") }}
+                    </td>
+                    <td>
+                        {{ entretien.total }} €
+                    </td>
+                </tr>
+                {% set total = total+ entretien.total %}
+            {% endfor %}
             <tr class="active total">
                 <td colspan="2">
-                    <b>Total {{ date|date("d/m/Y") }}</b>
+                    <b>Total</b>
                 </td>
                 <td>
-                    {{ total }} €
+                    <b>{{ total }} €</b>
                 </td>
             </tr>
-            {% set date = entretien.date %}
-            {% set total = 0 %}
-        {% endif %}
-        {% set total = total+ entretien.total %}
-        <tr>
-            <td>
-                <a href="{{ path("id4v_edit_entretien",{"vehicule":vehicule.id,"entretien":entretien.type}) }}">{{ entretien.type.name }}</a>
-            </td>
-            <td>
-                {{ entretien.date|date("d/m/Y") }}
-            </td>
-            <td>
-                {{ entretien.total }} €
-            </td>
-        </tr>
-        {% if display_total %}
-            {% set date = entretien.date %}
-            <tr class="active total">
-                <td colspan="2">
-                    <b>Total {{ date|date("d/m/Y") }}</b>
-                </td>
-                <td>
-                    {{ total }} €
-                </td>
-            </tr>
-            {% set total = 0 %}
-        {% endif %}
-
-    {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     {% endif %}
 {% endblock %}

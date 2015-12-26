@@ -1,11 +1,11 @@
 services:
     id4v_admin_vehicule:
         class: Id4v\Bundle\CarcheckBundle\Admin\VehiculeAdmin
-        arguments: [~,Id4v\Bundle\CarcheckBundle\Document\Vehicule, ~]
+        arguments: [~,Id4v\Bundle\CarcheckBundle\Entity\Vehicule, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Vehicules}
     id4v_admin_types_entretien:
         class: Id4v\Bundle\CarcheckBundle\Admin\TypeEntretienAdmin
-        arguments: [~,Id4v\Bundle\CarcheckBundle\Document\TypeEntretien, ~]
+        arguments: [~,Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Type d'entretien"}

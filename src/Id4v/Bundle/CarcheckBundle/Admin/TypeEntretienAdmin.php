@@ -8,7 +8,8 @@
 
 namespace Id4v\Bundle\CarcheckBundle\Admin;
 
-use Id4v\Bundle\CarcheckBundle\Document\Periode;
+use Id4v\Bundle\CarcheckBundle\Entity\Periode;
+use Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien;
 use Id4v\Bundle\CarcheckBundle\Form\Type\PeriodeType;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -55,5 +56,23 @@ class TypeEntretienAdmin extends Admin
         $filter->add("name");
     }
 
+    /**
+     * @param TypeEntretien $object
+     */
+    public function prePersist($object)
+    {
+        /** @var Periode $periode */
+        foreach ($object->getPeriodes() as $periode) {
+            $periode->setTypeEntretien($object);
+        }
+    }
+
+    public function preUpdate($object)
+    {
+        /** @var Periode $periode */
+        foreach ($object->getPeriodes() as $periode) {
+            $periode->setTypeEntretien($object);
+        }
+    }
 
 }

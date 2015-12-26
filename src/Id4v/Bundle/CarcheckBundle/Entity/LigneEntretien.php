@@ -1,46 +1,45 @@
 <?php
 
-namespace Id4v\Bundle\CarcheckBundle\Document;
+namespace Id4v\Bundle\CarcheckBundle\Entity;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * LigneEntretien
- * @Mongo\Document()
+ * @ORM\Entity()
+ * @ORM\Table()
  */
 class LigneEntretien
 {
     /**
      * @var integer
-     *
-     * @Mongo\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @Mongo\String()
+     * @ORM\Column(name="designation",type="string")
      */
     private $designation;
 
     /**
      * @var integer
-     *
-     * @Mongo\Integer()
+     * @ORM\Column(name="qte",type="integer")
      */
     private $qte;
 
     /**
      * @var float
-     * @Mongo\Float()
+     * @ORM\Column(name="prix",type="float")
      */
     private $prix;
 
     /**
      * @var
-     * @Mongo\EmbedOne(targetDocument="Entretien")
+     * @ORM\ManyToOne(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\Entretien", inversedBy="lignesFacture")
      */
     private $entretien;
 
@@ -123,10 +122,10 @@ class LigneEntretien
     /**
      * Set entretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      * @return self
      */
-    public function setEntretien(\Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien)
+    public function setEntretien(\Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien)
     {
         $this->entretien = $entretien;
         return $this;
@@ -135,7 +134,7 @@ class LigneEntretien
     /**
      * Get entretien
      *
-     * @return Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @return Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      */
     public function getEntretien()
     {

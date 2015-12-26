@@ -1,6 +1,6 @@
 <?php
 
-namespace Id4v\Bundle\CarcheckBundle\Document;
+namespace Id4v\Bundle\CarcheckBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,58 +8,56 @@ use Doctrine\ORM\Mapping as ORM;
  * Entretien
  *
  * @ORM\Entity()
- * @ORM\Table(name="Entretien")
+ * @ORM\Table()
  * @ORM\HasLifecycleCallbacks()
  */
 class Entretien
 {
     /**
      * @var integer
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Date
+     * @ORM\Column(type="date",name="date")
      */
     private $date;
 
     /**
      * @var integer
-     *
-     * @Mongo\Integer()
+     * @ORM\Column(name="kilometrage",type="integer")
      */
     private $kilometrage;
 
     /**
      * @var float
-     *
-     * @Mongo\Float()
+     * @ORM\Column(name="total",type="float")
      */
     private $total;
 
 
     /**
-     * @Mongo\EmbedOne(targetDocument="TypeEntretien")
+     * @ORM\ManyToOne(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien",inversedBy="entretiens")
      */
     private $type;
 
     /**
-     * @Mongo\EmbedMany(targetDocument="LigneEntretien")
+     * @ORM\OneToMany(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien",mappedBy="entretien", cascade={"persist"})
      */
     private $lignesFacture;
 
     /**
-     * @Mongo\EmbedOne(targetDocument="Vehicule",nullable=true)
+     * @ORM\ManyToOne(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\Vehicule", inversedBy="entretiens")
      */
     private $vehicule;
 
     /**
      * @var
-     * @Mongo\Date()
+     * @ORM\Column(name="prochaine_date",type="date",nullable=true)
      */
     private $prochaineDate;
 
@@ -95,8 +93,8 @@ class Entretien
 
 
     /**
-     * @Mongo\PrePersist()
-     * @Mongo\PreUpdate()
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function preSave()
     {
@@ -188,10 +186,10 @@ class Entretien
     /**
      * Set type
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $type
+     * @param Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien $type
      * @return self
      */
-    public function setType(\Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $type)
+    public function setType(\Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien $type)
     {
         $this->type = $type;
         return $this;
@@ -200,7 +198,7 @@ class Entretien
     /**
      * Get type
      *
-     * @return Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $type
+     * @return Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien $type
      */
     public function getType()
     {
@@ -210,19 +208,20 @@ class Entretien
     /**
      * Add lignesFacture
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\LigneEntretien $lignesFacture
+     * @param Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien $lignesFacture
      */
-    public function addLignesFacture(\Id4v\Bundle\CarcheckBundle\Document\LigneEntretien $lignesFacture)
+    public function addLignesFacture(\Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien $lignesFacture)
     {
+        $lignesFacture->setEntretien($this);
         $this->lignesFacture[] = $lignesFacture;
     }
 
     /**
      * Remove lignesFacture
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\LigneEntretien $lignesFacture
+     * @param Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien $lignesFacture
      */
-    public function removeLignesFacture(\Id4v\Bundle\CarcheckBundle\Document\LigneEntretien $lignesFacture)
+    public function removeLignesFacture(\Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien $lignesFacture)
     {
         $this->lignesFacture->removeElement($lignesFacture);
     }
@@ -240,10 +239,10 @@ class Entretien
     /**
      * Set vehicule
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Vehicule $vehicule
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Vehicule $vehicule
      * @return self
      */
-    public function setVehicule(\Id4v\Bundle\CarcheckBundle\Document\Vehicule $vehicule)
+    public function setVehicule(\Id4v\Bundle\CarcheckBundle\Entity\Vehicule $vehicule)
     {
         $this->vehicule = $vehicule;
         return $this;
@@ -252,7 +251,7 @@ class Entretien
     /**
      * Get vehicule
      *
-     * @return Id4v\Bundle\CarcheckBundle\Document\Vehicule $vehicule
+     * @return Id4v\Bundle\CarcheckBundle\Entity\Vehicule $vehicule
      */
     public function getVehicule()
     {

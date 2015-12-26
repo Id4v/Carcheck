@@ -8,13 +8,15 @@
 
 namespace Id4v\Bundle\CarcheckBundle\Form\Type;
 
-use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
-use Id4v\Bundle\CarcheckBundle\Document\TypeEntretien;
+use Id4v\Bundle\CarcheckBundle\Entity\Entretien;
+use Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 
 class EntretienType extends AbstractType{
 
@@ -33,7 +35,7 @@ class EntretienType extends AbstractType{
             )
             )
             ->add("kilometrage")
-           ->add("type",DocumentType::class,array(
+           ->add("type",EntityType::class,array(
                 "class"=>TypeEntretien::class
             ))
             ->add("lignesFacture",CollectionType::class,array(
@@ -48,7 +50,7 @@ class EntretienType extends AbstractType{
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class"=>'Id4v\Bundle\CarcheckBundle\Document\Entretien'
+            "data_class"=>Entretien::class
         ));
     }
 

@@ -22,19 +22,6 @@
     <table class="table table-striped lignesEntretien" data-prototype="{{ form_widget(form.lignesFacture.vars.prototype)|e }}">
         <tbody>
         {{ form_widget(form.lignesFacture) }}
-        {% for ligne in form.lignesFacture %}
-            <tr class="ligneFacture">
-                <td>
-                    {{ form_row(ligne.designation) }}
-                </td>
-                <td>
-                    {{ form_row(ligne.qte) }}
-                </td>
-                <td>
-                    {{ form_row(ligne.prix) }}
-                </td>
-            </tr>
-        {% endfor %}
         </tbody>
     </table>
     </div>

@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as CoreTypes;
+use Id4v\Bundle\CarcheckBundle\Entity\LigneEntretien;
 
 
 class LigneEntretienType extends AbstractType
@@ -33,7 +34,7 @@ class LigneEntretienType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class"=>'Id4v\Bundle\CarcheckBundle\Document\LigneEntretien'
+            "data_class"=>LigneEntretien::class
         ));
     }
 

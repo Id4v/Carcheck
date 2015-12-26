@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Id4v\Bundle\CarcheckBundle\Entity\Vehicule;
 
 class VehiculeType extends AbstractType
 {
@@ -19,7 +20,7 @@ class VehiculeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class"=>'Id4v\Bundle\CarcheckBundle\Document\Vehicule'
+            "data_class"=>Vehicule::class
         ));
     }
 

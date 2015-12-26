@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block head_js %}
+    {% set total = 0 %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {packages: ['corechart']});
@@ -9,23 +10,81 @@
         function drawChart() {
             // Define the chart to be drawn.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Element');
-            data.addColumn('number', 'Percentage');
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Prix');
+            data.addColumn('number', 'Kilomètres');
             data.addRows([
-                ['Nitrogen', 0.78],
-                ['Oxygen', 0.21],
-                ['Other', 0.01]
+                {% for ent in entretiens %}
+                ["{{ ent.date|date("d/m/Y") }}",{{ ent.totals }},{{ ent.kilometrage }}],
+                {% set total = total + ent.totals %}
+                {% endfor %}
+            ]);
+
+            var dataRepart= new google.visualization.DataTable();
+            dataRepart.addColumn('string','Type Entretien');
+            dataRepart.addColumn('number','Total');
+            dataRepart.addRows([
+                {% for rep in repartition %}
+                ["{{ rep.name }}",{{ rep.totals }}],
+                {% endfor %}
             ]);
 
             // Instantiate and draw the chart.
-            var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
-            chart.draw(data, null);
+            var options = {
+                title : 'Prix/Kilométrage sur la durée',
+                vAxes: {
+                    0: {logScale: false},
+                    1: {logScale: false}
+                },
+                series: {
+                    0: {targetAxisIndex: 0, type: 'bars'},
+                    1: {targetAxisIndex: 1, type: 'line'}
+                }
+            };
+
+            var options2= {
+                title: "Répartition par Type d'entretien"
+            };
+            var chart = new google.visualization.ComboChart(document.getElementById('comboChart'));
+            var chart2 = new google.visualization.PieChart(document.getElementById('pieChart'));
+            chart.draw(data, options);
+            chart2.draw(dataRepart,options2);
         }
     </script>
 {% endblock %}
 
 
 {% block page_content %}
-    <h1>Stats pour le vehicule {{ vehicule }}</h1>
+    <h1>Stats pour le vehicule <a href="{{ path('id4v_detail_vehicule',{'vehicule':vehicule.id}) }}">{{ vehicule }}</a></h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="comboChart"></div>
+        </div>
+        <div class="col-md-6">
+            <p>Total dépensé après achat : {{ vehicule.totalAfterAchat }} €</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="pieChart"></div>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                <th>Type</th>
+                <th>Total</th>
+                </thead>
+                <tbody>
+                    {% for rep in repartition %}
+                        <tr>
+                            <td>{{ rep.name }}</td>
+                            <td>{{ "%0.2f"|format(rep.totals) }}€</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
 

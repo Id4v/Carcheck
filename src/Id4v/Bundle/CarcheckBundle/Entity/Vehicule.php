@@ -1,42 +1,44 @@
 <?php
 
-namespace Id4v\Bundle\CarcheckBundle\Document;
+namespace Id4v\Bundle\CarcheckBundle\Entity;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Vehicule
- * @Mongo\Document(repositoryClass="Id4v\Bundle\CarcheckBundle\Repositories\VehiculeRepository")
- *
+ * @ORM\Entity(repositoryClass="Id4v\Bundle\CarcheckBundle\Repositories\VehiculeRepository")
+ * @ORM\Table()
  */
 class Vehicule
 {
     /**
      * @var integer
-     * @Mongo\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @Mongo\String()
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
      * @var integer
-     * @Mongo\Integer()
+     * @ORM\Column(type="integer")
      */
     private $kilometrage;
 
     /**
      * @var string
-     * @Mongo\String()
+     * @ORM\Column(type="string")
      */
     private $immatriculation;
 
     /**
-     * @Mongo\EmbedMany(targetDocument="Entretien", strategy="set")
+     * @ORM\OneToMany(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\Entretien", mappedBy="vehicule")
      */
     private $entretiens;
 
@@ -128,9 +130,9 @@ class Vehicule
     /**
      * Add entretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      */
-    public function addEntretien(\Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien)
+    public function addEntretien(\Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien)
     {
         $this->entretiens[] = $entretien;
     }
@@ -138,9 +140,9 @@ class Vehicule
     /**
      * Remove entretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien
+     * @param Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien
      */
-    public function removeEntretien(\Id4v\Bundle\CarcheckBundle\Document\Entretien $entretien)
+    public function removeEntretien(\Id4v\Bundle\CarcheckBundle\Entity\Entretien $entretien)
     {
         $this->entretiens->removeElement($entretien);
     }
@@ -153,5 +155,18 @@ class Vehicule
     public function getEntretiens()
     {
         return $this->entretiens;
+    }
+
+    public function getTotalAfterAchat()
+    {
+        $total=0;
+        /** @var Entretien $entretien */
+        foreach($this->getEntretiens() as $entretien)
+        {
+            $achat=new \DateTime("15-08-2013");
+            if($entretien->getDate() > $achat)
+                $total+=$entretien->getTotal();
+        }
+        return $total;
     }
 }

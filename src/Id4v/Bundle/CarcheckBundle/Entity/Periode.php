@@ -6,15 +6,17 @@
  * Time: 16:59
  */
 
-namespace Id4v\Bundle\CarcheckBundle\Document;
+namespace Id4v\Bundle\CarcheckBundle\Entity;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as Mongo;
+use Doctrine\Common\Annotations\Annotation\Enum;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Periode
- * @package Id4v\Bundle\CarcheckBundle\Document
+ * @package Id4v\Bundle\CarcheckBundle\Entity
  *
- * @Mongo\Document()
+ * @ORM\Table()
+ * @ORM\Entity()
  */
 class Periode
 {
@@ -22,25 +24,28 @@ class Periode
     const TYPE_KM="km";
     /**
      * @var
-     * @Mongo\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var
-     * @Mongo\String()
+     * @Enum(value={"annee","km"})
+     * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
      * @var
-     * @Mongo\Integer()
+     * @ORM\Column(type="integer", name="value")
      */
     protected $value;
 
     /**
      * @var
-     * @Mongo\EmbedOne(targetDocument="TypeEntretien")
+     * @ORM\ManyToOne(targetEntity="Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien", inversedBy="periodes", cascade={"persist"})
      */
     protected $typeEntretien;
 
@@ -102,10 +107,9 @@ class Periode
     /**
      * Set typeEntretien
      *
-     * @param Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $typeEntretien
      * @return self
      */
-    public function setTypeEntretien(\Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $typeEntretien)
+    public function setTypeEntretien(\Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien $typeEntretien)
     {
         $this->typeEntretien = $typeEntretien;
         return $this;
@@ -114,7 +118,7 @@ class Periode
     /**
      * Get typeEntretien
      *
-     * @return Id4v\Bundle\CarcheckBundle\Document\TypeEntretien $typeEntretien
+     * @return Id4v\Bundle\CarcheckBundle\Entity\TypeEntretien $typeEntretien
      */
     public function getTypeEntretien()
     {

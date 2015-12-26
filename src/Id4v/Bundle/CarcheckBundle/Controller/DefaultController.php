@@ -2,8 +2,8 @@
 
 namespace Id4v\Bundle\CarcheckBundle\Controller;
 
-use Id4v\Bundle\CarcheckBundle\Document\Vehicule;
-use Id4v\Bundle\CarcheckBundle\Document\Entretien;
+use Id4v\Bundle\CarcheckBundle\Entity\Vehicule;
+use Id4v\Bundle\CarcheckBundle\Entity\Entretien;
 use Id4v\Bundle\CarcheckBundle\Form\Type\EntretienType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,7 +14,7 @@ class DefaultController extends Controller
 {
     public function getDoctrine()
     {
-        return $this->get("doctrine_mongodb");
+        return $this->get("doctrine");
     }
 
 
@@ -59,11 +59,15 @@ class DefaultController extends Controller
      **/
     public function showStatsAction(Request $request){
         $vehicule=$this->getVehiculeForId($request->get("vehicule"));
-        $entretiens=$this->getDoctrine()->getRepository("Id4vCarcheckBundle:Vehicule")->getAllEntretiensForVehicule($vehicule);
+        $repo=$this->getDoctrine()->getRepository("Id4vCarcheckBundle:Vehicule");
+        $entretiens=$repo->getAllEntretiensForVehicule($vehicule);
+        $repartition=$repo->getRepartitionForVehicule($vehicule);
 
         return $this->render("@Id4vCarcheck/Default/stats.html.twig",
             array(
-                "vehicule"=>$vehicule
+                "vehicule"=>$vehicule,
+                "entretiens"=>$entretiens,
+                "repartition"=>$repartition
             )
         );
     }
@@ -79,13 +83,12 @@ class DefaultController extends Controller
         $em=$this->getDoctrine()->getManagerForClass("Id4vCarcheckBundle:Entretien");
         
         $ent=new Entretien();
+        $ent->setVehicule($vehicule);
         $form=$this->createForm(EntretienType::class,$ent);
         if($request->isMethod("POST")) {
             $form = $form->handleRequest($request);
             if($form->isValid()) {
-                $vehicule->addEntretien($ent);
                 $em->persist($ent);
-                $em->persist($vehicule);
                 $em->flush();
                 $this->addFlash("success", "Enregistré");
             }
@@ -98,7 +101,9 @@ class DefaultController extends Controller
      **/
     public function editEntretienAction(Request $request){
         $vehicule=$this->getVehiculeForId($request->get("vehicule"));
+
         $repoE=$this->getDoctrine()->getRepository("Id4vCarcheckBundle:Entretien");
+
         $ent=$repoE->find($request->get("entretien"));
 
         $em=$this->getDoctrine()->getManagerForClass("Id4vCarcheckBundle:Entretien");
@@ -107,7 +112,7 @@ class DefaultController extends Controller
             $ent = new Entretien();
             $ent->setVehicule($vehicule);
         }
-        $form=$this->createForm("entretien",$ent);
+        $form=$this->createForm(EntretienType::class,$ent);
         if($request->isMethod("POST")) {
             $form = $form->handleRequest($request);
             if($form->isValid()) {
